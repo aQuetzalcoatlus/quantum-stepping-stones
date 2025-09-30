@@ -928,6 +928,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "scipy" },
+    { name = "xkcd" },
 ]
 
 [package.metadata]
@@ -939,6 +940,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.3.3" },
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "scipy", specifier = ">=1.16.2" },
+    { name = "xkcd", specifier = ">=2.4.2" },
 ]
 
 [[package]]
@@ -1099,3 +1101,9 @@ sdist = { url = "https://files.pythonhosted.org/packages/24/30/6b0809f4510673dc7
 wheels = [
     { url = "https://files.pythonhosted.org/packages/af/b5/123f13c975e9f27ab9c0770f514345bd406d0e8d3b7a0723af9d43f710af/wcwidth-0.2.14-py2.py3-none-any.whl", hash = "sha256:a7bb560c8aee30f9957e5f9895805edd20602f2d7f720186dfd906e82b4982e1", size = 37286, upload-time = "2025-09-22T16:29:51.641Z" },
 ]
+
+[[package]]
+name = "xkcd"
+version = "2.4.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f8/dc/8e9824517b9fbc42f6d95a1a5d345c6b9e6dd885ec3a301953ac7c2fb4d3/xkcd-2.4.2.tar.gz", hash = "sha256:180cee51fd1733288448cd8551e36680b14811003287fe9ccf61888538dd0970", size = 10110, upload-time = "2017-03-26T03:04:47.841Z" }
