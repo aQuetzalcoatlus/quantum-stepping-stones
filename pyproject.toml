@@ -11,6 +11,7 @@ dependencies = [
     "networkx>=3.5",
     "numpy>=2.3.3",
     "pandas>=2.3.3",
+    "pylatexenc>=2.10",
     "scipy>=1.16.2",
     "xkcd>=2.4.2",
 ]
