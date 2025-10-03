@@ -6,14 +6,16 @@ st.header("Stabilizer Playground")
 
 with st.expander("Context — commute/anticommute → syndrome signs", expanded=True):
     st.markdown(r"""
-For an error $E$ and generator $g$, the measured sign flips to **−1** iff $E$ and $g$ **anticommute**.
+For an error $E$ and generator $g$, the measured sign flips to **$-1$** iff $E$ and $g$ **anticommute**.
 The syndrome is the vector of these signs across generators.
 
 Try different Pauli strings and see which checks flip.
 """)
 
-preset = st.radio("Generator set", ["Bit-flip (ZZI, IZZ)", "Phase-flip (XXI, IXX)"])
-gens = ["ZZI", "IZZ"] if preset.startswith("Bit") else ["XXI", "IXX"]
+preset = st.radio(
+    "Generator set", [r"Bit-flip ($ZZI$, $IZZ$)", r"Phase-flip ($XXI$, $IXX$)"]
+)
+gens = [r"$ZZI$", r"$IZZ$"] if preset.startswith("Bit") else [r"$XXI$", r"$IXX$"]
 
 P = (
     st.text_input("Error Pauli string (len=3 over I/X/Y/Z)", value="XII")
@@ -23,7 +25,7 @@ P = (
 valid = (len(P) == 3) and all(c in {"I", "X", "Y", "Z"} for c in P)
 
 if not valid:
-    st.error("Enter 3 chars from {I,X,Y,Z}.")
+    st.error(r"Enter 3 chars from {I,X,Y,Z}.")
 else:
     st.write("Generators:", ", ".join(gens))
     comm = [pauli_commutes(P, g) for g in gens]
