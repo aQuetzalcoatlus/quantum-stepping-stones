@@ -20,7 +20,7 @@ bitflip = st.Page(
 )
 phase = st.Page(
     "pages/3_PhaseFlip_H_Sandwich.py",
-    title="Phase-Flip (H-sandwich)",
+    title="Phase-Flip",
     icon=":material/gradient:",
 )
 stab = st.Page(

@@ -9,13 +9,62 @@ from qec.error_models import bsc_flip_mask
 
 st.header("Phase-Flip via Hadamard Sandwich")
 
-with st.expander("Context — why Z looks like X in the H basis", expanded=True):
+with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
-**Hadamard identities.** $H Z H = X,\quad H X H = Z$.
+### 🌱 What about phase errors?
+So far, we've learned how to protect against **bit-flip errors**: when a qubit jumps from `|0⟩` to `|1⟩` or vice versa.  
+But in quantum systems, there's another type of error: the **phase flip**.  
 
-Treat logical $\lvert +_L\rangle=\lvert +++\rangle$: a physical $Z_i$ behaves like an $X_i$ in the H-basis,
-so the **same parity checks** can diagnose and correct single $Z$ errors.  
-We declare a **logical phase error** if ≥2 Z remain after correction (majority logic in H-basis).
+A phase flip changes the relative sign:
+
+$$ \ket{+} \longrightarrow \ket{-} $$
+
+while leaving `|0⟩` and `|1⟩` untouched.
+This error is invisible in the computational basis, but it scrambles superpositions.
+
+---
+
+### 💡 The trick: switch bases
+We can turn a phase flip into a bit flip by moving to the **Hadamard basis**.  
+- Apply $H$ before the error → phase flips look like bit flips.  
+- Apply $H$ again afterwards → we return to the original basis.
+
+This "H-sandwich" lets us reuse the **3-qubit bit-flip code** to correct phase errors!
+
+---
+
+### 🔍 Encoding the phase-flip code
+The logical states are:
+$$ \ket{0_L} = \ket{+\,+\,+}, \qquad \ket{1_L} = \ket{-\, -\, -} $$
+so each logical qubit is protected against a single phase flip.
+
+The stabilizers we measure are now in the $X$ basis:
+- $X_1 X_2$  
+- $X_2 X_3$
+
+---
+
+### 🧩 Example
+- If qubit 1 suffers a $Z$ error, the syndrome pattern matches uniquely.  
+- The decoder applies $Z$ on that qubit to fix it.  
+
+Just like the bit-flip code — but rotated into the Hadamard basis.
+
+---
+
+### 📊 What you can do below
+1. Pick a qubit to flip its **phase** (apply $Z$), or let random errors occur with probability $p$.  
+2. See the stabilizer outcomes and the correction applied.  
+3. Run many trials and estimate the **logical error rate**.  
+
+---
+
+### 🚦 Challenge
+Experiment with different $p$:  
+- At small $p$, does the logical error become much smaller than $p$?  
+- At larger $p$, does the coding help, or can it make things worse?  
+
+This mirrors the same trade-off as before — now with **phase errors instead of bit flips**.
 """)
 
 st.subheader("Interactive demo")
