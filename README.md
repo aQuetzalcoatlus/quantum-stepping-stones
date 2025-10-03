@@ -6,6 +6,8 @@ This repository is meant to document my learning of Quantum Error Correction thr
 
 Learners who have a grasp of basic quantum information theory can use it to complement their own learning journey.
 
+# References
+
 The resources I intend to use:
 
 1. [Quantum Error Correction: An Introductory Guide by Roffe](http://arxiv.org/abs/1907.11157)

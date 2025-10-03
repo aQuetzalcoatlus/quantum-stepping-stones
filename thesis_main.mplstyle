@@ -1,0 +1,12 @@
+text.usetex: True  # Use LaTeX to format labels and titles
+font.family: serif
+font.serif: cm  # Computer Modern font, the default LaTeX font
+axes.titlesize: 20  # Title font size in points
+xtick.labelsize: 12  # x-tic label font size in points
+ytick.labelsize: 12  # y-tic label font size in points
+axes.labelsize: 16  # x and y axis label font size in points
+axes.grid: True  # Enable grid by default
+grid.linewidth: 0.4  # Set grid thickness to half of the default value
+grid.color: "white"  # Changed to white for better visibility
+figure.titlesize: 20  # Set the default super title font size to 20 points
+axes.prop_cycle : cycler('color', ["#32908F", "#585481", "#9BC53D", "#F97068", "#FAA613", "#ADB2D3", "#4059AD"])
