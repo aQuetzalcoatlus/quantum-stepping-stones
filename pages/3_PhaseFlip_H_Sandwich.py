@@ -12,60 +12,63 @@ st.header("Phase-Flip via Hadamard Sandwich")
 with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
 ### 🌱 What about phase errors?
-So far, we've learned how to protect against **bit-flip errors**: when a qubit jumps from `|0⟩` to `|1⟩` or vice versa.  
-But in quantum systems, there's another type of error: the **phase flip**.  
+So far, we’ve learned how to protect against **bit-flip errors** — when a qubit jumps between `|0⟩` and `|1⟩`.
+Quantum systems also suffer **phase flips**, described by the Pauli-$Z$ operator:
 
-A phase flip changes the relative sign:
+$$ Z\ket{ 0}=\ket{ 0},\qquad Z\ket{ 1}=-\ket{ 1}.$$
 
-$$ \ket{+} \longrightarrow \ket{-} $$
+> ⚠️ Note: for the *pure* state `|1⟩`, that minus sign is a **global phase** (undetectable on its own).
+> The effect matters for **superpositions**, where $Z$ changes the **relative phase**:
 
-while leaving `|0⟩` and `|1⟩` untouched.
-This error is invisible in the computational basis, but it scrambles superpositions.
+$$ Z\,(a\ket{ 0}+b\ket{ 1})=a\ket{ 0}-b\ket{ 1},$$
+so, in particular, \(Z\ket{ +}=\ket{ -}\).
 
 ---
 
 ### 💡 The trick: switch bases
-We can turn a phase flip into a bit flip by moving to the **Hadamard basis**.  
-- Apply $H$ before the error → phase flips look like bit flips.  
-- Apply $H$ again afterwards → we return to the original basis.
+We can turn a phase flip into a bit flip by moving to the **Hadamard basis**.
+- Apply $H$ before the error: phase flips look like bit flips.
+- Apply $H$ again afterwards: return to the original basis.
 
-This "H-sandwich" lets us reuse the **3-qubit bit-flip code** to correct phase errors!
+This "H-sandwich" lets us reuse the **3-qubit bit-flip code** to correct phase errors, because \(HZH = X\).
 
 ---
 
 ### 🔍 Encoding the phase-flip code
-The logical states are:
-$$ \ket{0_L} = \ket{+\,+\,+}, \qquad \ket{1_L} = \ket{-\, -\, -} $$
-so each logical qubit is protected against a single phase flip.
+Logical states:
 
-The stabilizers we measure are now in the $X$ basis:
-- $X_1 X_2$  
-- $X_2 X_3$
+$$ \ket{ 0_L}=\ket{ +++},\qquad \ket{ 1_L}=\ket{ ---}.$$
+We measure $X$-type stabilizers:
+- $X_1X_2$
+- $X_2X_3$
+
+A single $Z$ on any one qubit flips a unique pattern of these checks (the **syndrome**).
 
 ---
 
 ### 🧩 Example
-- If qubit 1 suffers a $Z$ error, the syndrome pattern matches uniquely.  
-- The decoder applies $Z$ on that qubit to fix it.  
+- If qubit 1 suffers a $Z$ error, the syndrome uniquely identifies it.
+- The decoder applies $Z$ on that qubit to fix it.
 
-Just like the bit-flip code — but rotated into the Hadamard basis.
+This is the same idea as the bit-flip code — just rotated into the Hadamard basis.
 
 ---
 
 ### 📊 What you can do below
-1. Pick a qubit to flip its **phase** (apply $Z$), or let random errors occur with probability $p$.  
-2. See the stabilizer outcomes and the correction applied.  
-3. Run many trials and estimate the **logical error rate**.  
+1. Inject a **phase** error ($Z$) on a chosen qubit, or let random $Z$ errors occur with probability $p$.
+2. See the stabilizer outcomes and the correction applied.
+3. Run many trials to estimate the **logical error rate** (probability the decoded logical state is still wrong after correction).
 
 ---
 
 ### 🚦 Challenge
-Experiment with different $p$:  
-- At small $p$, does the logical error become much smaller than $p$?  
-- At larger $p$, does the coding help, or can it make things worse?  
+Play with different $p$:
+- At small $p$, can you make the logical error much smaller than $p$?
+- At larger $p$, does coding still help, or can it start to hurt?
 
-This mirrors the same trade-off as before — now with **phase errors instead of bit flips**.
+This mirrors the same trade-off as before — now with **phase** errors instead of bit flips.
 """)
+
 
 st.subheader("Interactive demo")
 code = ThreeQubitBitFlip()
