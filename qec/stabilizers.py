@@ -13,9 +13,18 @@ _ANTI = {
 }
 
 
+class PauliLengthError(ValueError):
+    """Raised when Pauli strings have different lengths."""
+
+
 def pauli_commutes(P: str, Q: str) -> bool:
     """Return True if equal-length Pauli strings commute."""
-    assert len(P) == len(Q), "Pauli strings must have equal length"
+
+    if len(P) != len(Q):
+        raise PauliLengthError(
+            f"Pauli strings must have equal length (got {len(P)} vs {len(Q)})"
+        )
+
     anti = 0
     for a, b in zip(P, Q):
         if a == "I" or b == "I" or a == b:
