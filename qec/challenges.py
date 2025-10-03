@@ -27,7 +27,7 @@ def check_threshold(
         r = state.get(key_rate, None)
         if r is None:
             return False, "Run the estimator first, then try again."
-        return (r <= target, f"Your rate={r:.4f} (target ≤ {target:.4f}).")
+        return (r <= target, rf"Your rate $ = {r:.4f}$ (target $\leq {target:.4f}$).")
 
     return _check
 
@@ -50,7 +50,7 @@ def check_smallest_n_below(
         n_min = min(feasible, key=lambda x: x[0])[0]
         n_now = state.get("n", None)
         ok = n_now == n_min
-        msg = f"Smallest n achieving ≤{target:.3f} is n={n_min}. You have n={n_now}."
+        msg = rf"Smallest $n$ achieving $\leq {target:.3f}$ is $n={n_min}$. You have $n={n_now}$."
         return ok, msg
 
     return _check

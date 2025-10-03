@@ -9,7 +9,7 @@ from qec.challenges import Challenge, check_smallest_n_below, check_threshold
 st.header("Classical Repetition Code")
 
 # ---------- Context block ----------
-with st.expander("Context (what’s going on) — click to read", expanded=True):
+with st.expander("Context (what’s going on) - click to read", expanded=True):
     st.markdown(r"""
 Information is prone to errors. Sending a "bit" of information (say `0`) through a noisy channel
 can alter this bit (in this case, "flipping" to `1`), resulting in the receiver getting incorrect information.
@@ -37,9 +37,16 @@ Instead of checking one value of $n$, we can **sweep** across several code lengt
 - y-axis: the **logical error rate** (from Monte Carlo)
 
 Try sliding $p$:
-- For **small $p$** (e.g. 0.1), increasing $n$ lowers the logical error — coding helps.
-- For **large $p$** (e.g. 0.4), the curve bends upward — more redundancy can hurt (majority goes the wrong way).
+- For **small $p$** (e.g. 0.1), increasing $n$ lowers the logical error - coding helps.
+- For **large $p$** (e.g. 0.4), the curve bends upward - more redundancy can hurt (majority goes the wrong way).
 """)
+st.text("See the plot:")
+st.image(
+    "plots/classical_error_rates.png",
+    caption="Logical error rate",
+    # use_container_width=True,
+    width=700,
+)
 
 st.divider()
 
@@ -62,7 +69,7 @@ def activity_columns():
 left, right = activity_columns()
 
 # =========================================
-# ACTIVITY 1 — Point estimate at chosen (p, n)
+# ACTIVITY 1 - Point estimate at chosen (p, n)
 # =========================================
 with left:
     st.subheader("Activity 1 · Estimate logical error at chosen $p$ and $n$")
@@ -87,12 +94,12 @@ with left:
         )
 
     # small challenge tied to Activity 1
-    st.markdown("**Challenge A** — Hit a target now")
+    st.markdown("**Challenge A** - Hit a target now")
     targetA = st.number_input(
-        "Target error ≤", 0.0, 1.0, 0.05, 0.005, format="%.3f", key="rep_targetA"
+        r"Target error $\leq$", 0.0, 1.0, 0.05, 0.005, format="%.3f", key="rep_targetA"
     )
     chA = Challenge(
-        prompt=f"Using your current sliders, achieve error ≤ {targetA:.3f}.",
+        prompt=rf"Using your current sliders, achieve error $\leq {targetA:.3f}$.",
         check=check_threshold(targetA, key_rate="rep_point_rate"),
         hint="Increase n or reduce p; then press **Estimate error rate**.",
     )
@@ -105,7 +112,7 @@ with left:
             st.warning(msg)
 
 # =========================================
-# ACTIVITY 2 — Sweep over n (fixed p)
+# ACTIVITY 2 - Sweep over n (fixed p)
 # =========================================
 with right:
     st.subheader("Activity 2 · Sweep over $n$ at fixed $p$")
@@ -147,9 +154,9 @@ with right:
         )
 
     # challenge tied to Activity 2 (smallest n below target)
-    st.markdown("**Challenge B** — Find the smallest n that meets a target")
+    st.markdown("**Challenge B** - Find the smallest n that meets a target")
     targetB = st.number_input(
-        "Target error ≤ (sweep)",
+        r"Target error $\leq$ (sweep)",
         0.0,
         1.0,
         0.05,
@@ -158,7 +165,7 @@ with right:
         key="rep_targetB",
     )
     chB = Challenge(
-        prompt=f"Using your last sweep at p={p2:.2f}, identify the **smallest** n with error ≤ {targetB:.3f}. "
+        prompt=rf"Using your last sweep at $p={p2:.2f}$, identify the **smallest** $n$ with error $\leq {targetB:.3f}$. "
         f"Then set that n in Activity 1 and verify.",
         check=check_smallest_n_below(targetB, key_curve="rep_sweep_curve"),
         hint="Run the sweep; pick the left-most n that dips below the target.",
