@@ -242,8 +242,14 @@ elif page == "Repetition":
         ns = np.array([1, 3, 5, 7, 9])
         rates = [simulate_repetition(int(ni), p, max(1000, trials // 5)) for ni in ns]
         data = pd.DataFrame({"n": ns, "logical_error_rate": rates})
-        st.line_chart(data, x="n", y="logical_error_rate", use_container_width=True)
-        st.y_label("Logical Error Rate")
+        st.line_chart(
+            data,
+            x="n",
+            y="logical_error_rate",
+            y_label="Logical Error Rate",
+            use_container_width=True,
+        )
+
         # fig = plt.figure()
         # # Override only tick label fonts
         # plt.plot(ns, rates, marker="o")
