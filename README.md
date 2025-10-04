@@ -1,10 +1,12 @@
 # Quantum Stepping Stones
 
-> *Mistakes are the stepping stones to success.*
-
 This repository is meant to document my learning of Quantum Error Correction through coding exercises.
 
 Learners who have a grasp of basic quantum information theory can use it to complement their own learning journey.
+
+<div class="alert alert-block alert-info"> 
+<b>Update:</b> I am developing this into a web app made using Streamlit (https://streamlit.io/).
+</div>
 
 # References
 
