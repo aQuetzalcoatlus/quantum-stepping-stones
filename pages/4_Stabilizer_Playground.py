@@ -30,7 +30,7 @@ if any(len(g) != target_len for g in gens):
 else:
     # If user input length mismatches, auto-fix with padding/truncation and tell the user.
     if len(P) < target_len:
-        st.info(f"Input shorter than {target_len}. Padding with I’s on the right.")
+        st.info(f"Input shorter than {target_len}. Padding with I's on the right.")
         P = P + "I" * (target_len - len(P))
     elif len(P) > target_len:
         st.info(
@@ -54,5 +54,5 @@ else:
         st.error(str(e))
 
 st.info(
-    "Mini-exercise: find an operator that commutes with both ZZI and IZZ but isn’t a stabilizer (hint: ZZZ)."
+    "Mini-exercise: find an operator that commutes with both ZZI and IZZ but isn't a stabilizer (hint: ZZZ)."
 )

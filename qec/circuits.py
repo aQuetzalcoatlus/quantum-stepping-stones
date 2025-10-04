@@ -38,6 +38,18 @@ def bitflip_syndrome_circuit() -> QuantumCircuit:
     return qc
 
 
+def phase_demo_circuit(*, apply_z: bool, measure_x_basis: bool) -> QuantumCircuit:
+    """Prepare |+>, optionally apply Z, optionally rotate to X basis (H) before measurement."""
+    qc = QuantumCircuit(1, 1)
+    qc.h(0)
+    if apply_z:
+        qc.z(0)
+    if measure_x_basis:
+        qc.h(0)
+    qc.measure(0, 0)
+    return qc
+
+
 def draw_circuit(circuit: QuantumCircuit, figsize=(6, 3)):
     """
     Render a QuantumCircuit to a matplotlib Figure, suitable for st.image.

@@ -1,8 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import streamlit as st
 
-from qec.analytics import phaseflip_mc_error
+from qec.analytics import phaseflip_mc_error, phaseflip_mixed_counts
 from qec.challenges import Challenge, check_threshold
+from qec.circuits import draw_circuit
 from qec.codes import ThreeQubitBitFlip
 from qec.decoders import lookup_decoder_3q
 from qec.error_models import bsc_flip_mask
@@ -12,117 +15,120 @@ st.header("Phase-Flip via Hadamard Sandwich")
 with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
 ### 🌱 What about phase errors?
-So far, we’ve learned how to protect against **bit-flip errors** — when a qubit jumps between `|0⟩` and `|1⟩`.
-Quantum systems also suffer **phase flips**, described by the Pauli-$Z$ operator:
+Up to now, we've only worried about **bit flips** — errors that swap $\ket{0}$ and $\ket{1}$.  
+But quantum systems also suffer **phase flips**, described by the Pauli-$Z$ operator:
 
-$$ Z\ket{ 0}=\ket{ 0},\qquad Z\ket{ 1}=-\ket{ 1}.$$
+$$ Z\ket{0} = \ket{0}, \qquad Z\ket{1} = -\ket{1}. $$
 
-> ⚠️ Note: for the *pure* state `|1⟩`, that minus sign is a **global phase** (undetectable on its own).
-> The effect matters for **superpositions**, where $Z$ changes the **relative phase**:
+For the pure state $\ket{1}$, that minus sign is just a **global phase** (invisible on its own).  
+But for a **superposition**, like
 
-$$ Z\,(a\ket{ 0}+b\ket{ 1})=a\ket{ 0}-b\ket{ 1},$$
-so, in particular, \(Z\ket{ +}=\ket{ -}\).
+$$ \ket{+} = \tfrac{1}{\sqrt{2}}\big(\ket{0}+\ket{1}\big), $$
+a $Z$ error turns it into
+
+$$ \ket{-} = \tfrac{1}{\sqrt{2}}\big(\ket{0}-\ket{1}\big). $$
+
+Now the relative phase between components has changed — and this is physically observable if you measure in the right basis.
 
 ---
 
 ### 💡 The trick: switch bases
-We can turn a phase flip into a bit flip by moving to the **Hadamard basis**.
-- Apply $H$ before the error: phase flips look like bit flips.
-- Apply $H$ again afterwards: return to the original basis.
+If we want to treat phase flips just like bit flips, we can **rotate the basis** using Hadamards:
+- Apply $H$ before the noise: $Z$ errors become $X$-like.
+- Apply $H$ after the noise: rotate back.
 
-This "H-sandwich" lets us reuse the **3-qubit bit-flip code** to correct phase errors, because \(HZH = X\).
+This “H-sandwich” lets us reuse the same 3-qubit bit-flip code to also protect against phase errors.
 
 ---
 
 ### 🔍 Encoding the phase-flip code
-Logical states:
+The logical states are:
 
-$$ \ket{ 0_L}=\ket{ +++},\qquad \ket{ 1_L}=\ket{ ---}.$$
-We measure $X$-type stabilizers:
-- $X_1X_2$
-- $X_2X_3$
+$$ \ket{0_L} = \ket{+ + +}, \qquad \ket{1_L} = \ket{- - -}. $$
 
-A single $Z$ on any one qubit flips a unique pattern of these checks (the **syndrome**).
+The stabilizers we measure are $X$-type:
+- $X_1 X_2$
+- $X_2 X_3$
+
+If a single $Z$ error occurs, the syndrome identifies which qubit flipped in phase.
 
 ---
 
 ### 🧩 Example
-- If qubit 1 suffers a $Z$ error, the syndrome uniquely identifies it.
-- The decoder applies $Z$ on that qubit to fix it.
+- If qubit 1 suffers a $Z$ error, the $X_1X_2$ stabilizer anticommutes and signals it.  
+- If qubit 2 suffers a $Z$ error, both checks flip.  
+- If qubit 3 suffers a $Z$ error, only $X_2X_3$ detects it.  
 
-This is the same idea as the bit-flip code — just rotated into the Hadamard basis.
+The decoder then applies $Z$ on the identified qubit to restore the logical state.
+
+---
+
+### 🎲 Activity
+To really *see* what a phase flip does, let's look at a single qubit in the lab:
+
+1. Prepare the state $\ket{+}$.  
+2. With probability $p$, apply a $Z$ error.  
+3. Measure either in the **Z basis** or the **X basis**.  
+
+- In the Z basis, the counts don't change — the phase error is invisible here.  
+- In the X basis, the error flips $\ket{+}\mapsto\ket{-}$, and you'll see outcome “1” appear with probability $\approx p$.  
+
+This small experiment shows why the H-sandwich works: it rotates phase errors into a basis where they become **measurable bit flips**.
 
 ---
 
 ### 📊 What you can do below
-1. Inject a **phase** error ($Z$) on a chosen qubit, or let random $Z$ errors occur with probability $p$.
-2. See the stabilizer outcomes and the correction applied.
-3. Run many trials to estimate the **logical error rate** (probability the decoded logical state is still wrong after correction).
+1. Use the sliders to set the error probability $p$ and number of shots.  
+2. Run the simulation in Z basis and then X basis.  
+3. Compare the bar charts and circuits to see when the phase error shows up.  
 
 ---
 
 ### 🚦 Challenge
-Play with different $p$:
-- At small $p$, can you make the logical error much smaller than $p$?
-- At larger $p$, does coding still help, or can it start to hurt?
+Try $p=0.3$ with 5000 shots.  
+- In the Z basis: the counts barely move from 50/50.  
+- In the X basis: you should see roughly 70% “0” and 30% “1” — revealing the phase flips directly.  
 
-This mirrors the same trade-off as before — now with **phase** errors instead of bit flips.
+This activity bridges the intuition from abstract stabilizers to something you can **observe and play with**.
 """)
 
 
-st.subheader("Interactive demo")
-code = ThreeQubitBitFlip()
+st.subheader("Activity: Make a phase flip visible")
 
-p = st.slider("Physical Z error prob p", 0.0, 0.5, 0.10, 0.01)
-trials = st.slider("Monte-Carlo trials", 100, 100_000, 10_000, 100)
-mode = st.radio("Z-error mode", ["Manual (pick a qubit)", "Random"])
+col_demo, col_notes = st.columns([1, 1], vertical_alignment="top")
 
-forcedZ = np.array([0, 0, 0], dtype=int)
-if mode.startswith("Manual"):
-    qz = st.radio("Inject Z on:", ["none", "1", "2", "3"], horizontal=True)
-    if qz != "none":
-        forcedZ[int(qz) - 1] = 1
-        eZ = forcedZ
-    else:
-        eZ = bsc_flip_mask(3, p)
-else:
-    eZ = bsc_flip_mask(3, p)
+with col_demo:
+    p = st.slider(r"Phase-flip probability $p$ ($Z$ error)", 0.0, 1.0, 0.20, 0.01)
+    shots = st.slider("Shots", 100, 20000, 5000, 100)
 
-if st.button("Run one shot (phase)"):
-    syn, corrZ = lookup_decoder_3q(
-        code, eZ
-    )  # correction corresponds to Zs conceptually
-    post = (eZ + corrZ) % 2
-    logical_phase_error = int(post.sum() > 1)
-    st.json(
-        {
-            "Z injected": eZ.tolist(),
-            "syndrome (±1)": ["-1" if b == 1 else "+1" for b in syn],
-            "Z-correction": corrZ.tolist(),
-            "post-Z": post.tolist(),
-            "logical phase error?": bool(logical_phase_error),
-        }
+    st.markdown(r"**Measure in $Z$ basis** (computational basis)")
+    if st.button(r"Run ($Z$ basis)"):
+        counts, qcI, qcZ = phaseflip_mixed_counts(p, shots, measure_x_basis=False)
+        dfz = pd.DataFrame.from_dict(counts, orient="index", columns=["counts"])
+        st.bar_chart(dfz, use_container_width=True)
+        st.caption(
+            r"$Z$ basis: relative phase is hidden; counts barely reflect $Z$ errors."
+        )
+        st.pyplot(draw_circuit(qcI), use_container_width=True)
+        st.pyplot(draw_circuit(qcZ), use_container_width=True)
+
+    st.markdown(r"**Measure in $X$ basis** (apply $H$ then measure)")
+    if st.button(r"Run ($X$ basis)"):
+        counts, qcI, qcZ = phaseflip_mixed_counts(p, shots, measure_x_basis=True)
+        dfx = pd.DataFrame.from_dict(counts, orient="index", columns=["counts"])
+        st.bar_chart(dfx, use_container_width=True)
+        st.caption(
+            r"$X$ basis: $Z$ errors flip $\ket{+} \mapsto \ket{-}$, so outcome `1` appears with probability $\approx p$."
+        )
+        st.pyplot(draw_circuit(qcI), use_container_width=True)
+        st.pyplot(draw_circuit(qcZ), use_container_width=True)
+
+with col_notes:
+    st.markdown("**What to notice**")
+    st.markdown(
+        r"""
+        - In the **$Z$ basis**, a $Z$ error doesn't change measurement probabilities for $\ket{+}$.
+        - In the **$X$ basis**, the phase becomes visible as a flip between $\ket{+}$ and $\ket{-}$.
+        - This is exactly why the $H$-sandwich detects phase flips.
+    """
     )
-
-if st.button("Estimate logical Z error rate"):
-    rate = phaseflip_mc_error(p, trials)
-    st.session_state["phase_rate"] = rate
-    st.metric("Estimated logical Z error", f"{rate:.4f}")
-
-st.subheader("Challenge")
-target = st.number_input(
-    "Target logical phase error ≤", 0.0, 1.0, 0.05, 0.005, format="%.3f"
-)
-ch = Challenge(
-    prompt=f"At your chosen p, make the logical Z error ≤ {target:.3f}.",
-    check=check_threshold(target, key_rate="phase_rate"),
-    hint="Reduce p or understand when single Z is corrected vs. double Z causing failure.",
-)
-st.write(f"**Challenge:** {ch.prompt}")
-if st.button("Check my answer"):
-    ok, msg = ch.check({"phase_rate": st.session_state.get("phase_rate")})
-    if ok:
-        st.success(msg)
-        st.balloons()
-    else:
-        st.warning(msg)
