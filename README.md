@@ -4,9 +4,7 @@ This repository is meant to document my learning of Quantum Error Correction thr
 
 Learners who have a grasp of basic quantum information theory can use it to complement their own learning journey.
 
-<div class="alert alert-block alert-info"> 
-<b>Update:</b> I am developing this into a web app made using Streamlit (https://streamlit.io/).
-</div>
+Update:</b> I am developing this into a web app made using [Streamlit](https://streamlit.io/).
 
 # References
 
