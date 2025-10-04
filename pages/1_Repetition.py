@@ -9,7 +9,7 @@ from qec.challenges import Challenge, check_smallest_n_below, check_threshold
 st.header("Classical Repetition Code")
 
 # ---------- Context block ----------
-with st.expander("Context (what’s going on) - click to read", expanded=True):
+with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
 Information is prone to errors. Sending a "bit" of information (say `0`) through a noisy channel
 can alter this bit (in this case, "flipping" to `1`), resulting in the receiver getting incorrect information.

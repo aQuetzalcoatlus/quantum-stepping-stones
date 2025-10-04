@@ -15,7 +15,7 @@ st.header("Phase-Flip via Hadamard Sandwich")
 with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
 ### 🌱 What about phase errors?
-Up to now, we've only worried about **bit flips** — errors that swap $\ket{0}$ and $\ket{1}$.  
+Up to now, we've only worried about **bit flips**, which are errors that swap $\ket{0}$ and $\ket{1}$.  
 But quantum systems also suffer **phase flips**, described by the Pauli-$Z$ operator:
 
 $$ Z\ket{0} = \ket{0}, \qquad Z\ket{1} = -\ket{1}. $$
@@ -28,7 +28,7 @@ a $Z$ error turns it into
 
 $$ \ket{-} = \tfrac{1}{\sqrt{2}}\big(\ket{0}-\ket{1}\big). $$
 
-Now the relative phase between components has changed — and this is physically observable if you measure in the right basis.
+Now the relative phase between components has changed - and this is physically observable if you measure in the right basis.
 
 ---
 
@@ -70,7 +70,7 @@ To really *see* what a phase flip does, let's look at a single qubit in the lab:
 2. With probability $p$, apply a $Z$ error.  
 3. Measure either in the **Z basis** or the **X basis**.  
 
-- In the Z basis, the counts don't change — the phase error is invisible here.  
+- In the Z basis, the counts don't change, the phase error is invisible here.  
 - In the X basis, the error flips $\ket{+}\mapsto\ket{-}$, and you'll see outcome “1” appear with probability $\approx p$.  
 
 This small experiment shows why the H-sandwich works: it rotates phase errors into a basis where they become **measurable bit flips**.
@@ -87,7 +87,7 @@ This small experiment shows why the H-sandwich works: it rotates phase errors in
 ### 🚦 Challenge
 Try $p=0.3$ with 5000 shots.  
 - In the Z basis: the counts barely move from 50/50.  
-- In the X basis: you should see roughly 70% “0” and 30% “1” — revealing the phase flips directly.  
+- In the X basis: you should see roughly 70% “0” and 30% “1”, revealing the phase flips directly.  
 
 This activity bridges the intuition from abstract stabilizers to something you can **observe and play with**.
 """)
