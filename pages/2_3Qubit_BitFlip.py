@@ -13,7 +13,7 @@ st.header("3-Qubit Bit-Flip Code")
 
 with st.expander("Learn the concept", expanded=True):
     st.markdown(r"""
-    ## 🌱 Why do we need more than repetition?
+    ## Why do we need more than repetition?
     In the last activity, we saw that repeating a bit and taking the **majority vote** can protect information
     from random flips.  
 
@@ -23,7 +23,7 @@ with st.expander("Learn the concept", expanded=True):
 
     ---
 
-    ## 💡 The 3-qubit bit-flip code
+    ## The 3-qubit bit-flip code
     This is the simplest true **quantum error-correcting code**.  
     - Logical states are encoded as:
     $$ \ket{ 0_L} = \ket{000}, \qquad \ket{1_L} = \ket{111} $$           
@@ -32,7 +32,7 @@ with st.expander("Learn the concept", expanded=True):
 
     ---
 
-    ### 🔍 How can we detect an error without measuring the logical state?
+    ### How can we detect an error without measuring the logical state?
     We measure **stabilizers**, which are special operators that check **parity** between pairs of qubits:
     - $Z_1 Z_2$ compares qubit 1 with 2  
     - $Z_2 Z_3$ compares qubit 2 with 3  
@@ -58,7 +58,7 @@ with st.expander("Learn the concept", expanded=True):
 
     ---
 
-    ## 🔑 What's the decoder?
+    ## What is the decoder?
     The **decoder** is just a small lookup table:  
     - Syndrome: “apply an $X$ gate on the identified qubit”  
 

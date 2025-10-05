@@ -23,7 +23,7 @@ they can still correctly decode it as `0`, because the majority of bits are `0`.
 The `000` in this process is called a **logical bit**, and the length of the code (how many times the bit is repeated) is the **code length**.
 This error-correcting method is called a **repetition code**. It fails if more than **half** the bits flip.
 
-### 🔑 Logical error rate
+### Logical error rate
 When we add redundancy, we care about the probability that the **decoded logical bit** is wrong after applying the correction rule.
 This probability is the **logical error rate**.  
 For code length $n$ and physical flip probability $p$:
@@ -31,7 +31,7 @@ $$
 P_\text{logical}(n,p) \;=\; \sum_{k=\lfloor n/2 \rfloor + 1}^{n} \binom{n}{k}\, p^k (1-p)^{\,n-k}.
 $$
 
-### 📊 What the sweep plot shows
+### What the sweep plot shows
 Instead of checking one value of $n$, we can **sweep** across several code lengths at a fixed $p$:
 - x-axis: the **code length** $n$
 - y-axis: the **logical error rate** (from Monte Carlo)
