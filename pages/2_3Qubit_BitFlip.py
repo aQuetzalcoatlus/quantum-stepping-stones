@@ -72,7 +72,7 @@ with st.expander("Learn the concept", expanded=False):
 
     # show syndrome circuit
     fig2 = draw_circuit(bitflip_syndrome_circuit())
-    st.pyplot(fig2, use_container_width=True)
+    st.pyplot(fig2, width="stretch")
     st.caption("Figure 2: Syndrome extraction circuit")
 
 st.subheader("Interactive demo")
@@ -132,7 +132,7 @@ with left:
             },
             index=["q1", "q2", "q3"],
         )
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width="stretch")
 
     if st.button("Estimate logical error rate"):
         rate = bitflip_mc_error(p, trials)

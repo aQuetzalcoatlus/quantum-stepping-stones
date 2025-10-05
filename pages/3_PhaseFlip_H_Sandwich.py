@@ -105,23 +105,23 @@ with col_demo:
     if st.button(r"Run ($Z$ basis)"):
         counts, qcI, qcZ = phaseflip_mixed_counts(p, shots, measure_x_basis=False)
         dfz = pd.DataFrame.from_dict(counts, orient="index", columns=["counts"])
-        st.bar_chart(dfz, use_container_width=True)
+        st.bar_chart(dfz, width="stretch")
         st.caption(
             r"$Z$ basis: relative phase is hidden; counts barely reflect $Z$ errors."
         )
-        st.pyplot(draw_circuit(qcI), use_container_width=True)
-        st.pyplot(draw_circuit(qcZ), use_container_width=True)
+        st.pyplot(draw_circuit(qcI), width="stretch")
+        st.pyplot(draw_circuit(qcZ), width="stretch")
 
     st.markdown(r"**Measure in $X$ basis** (apply $H$ then measure)")
     if st.button(r"Run ($X$ basis)"):
         counts, qcI, qcZ = phaseflip_mixed_counts(p, shots, measure_x_basis=True)
         dfx = pd.DataFrame.from_dict(counts, orient="index", columns=["counts"])
-        st.bar_chart(dfx, use_container_width=True)
+        st.bar_chart(dfx, width="stretch")
         st.caption(
             r"$X$ basis: $Z$ errors flip $\ket{+} \mapsto \ket{-}$, so outcome `1` appears with probability $\approx p$."
         )
-        st.pyplot(draw_circuit(qcI), use_container_width=True)
-        st.pyplot(draw_circuit(qcZ), use_container_width=True)
+        st.pyplot(draw_circuit(qcI), width="stretch")
+        st.pyplot(draw_circuit(qcZ), width="stretch")
 
 with col_notes:
     st.markdown("**What to notice**")

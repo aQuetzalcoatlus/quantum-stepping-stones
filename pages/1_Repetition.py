@@ -44,7 +44,7 @@ st.text("See the plot:")
 st.image(
     "plots/classical_error_rates.png",
     caption="Logical error rate",
-    # use_container_width=True,
+    # width="stretch",
     width=700,
 )
 
@@ -141,7 +141,7 @@ with right:
         df = pd.DataFrame({"n": ns, "logical_error": rates})
         st.session_state["rep_sweep_df"] = df
         st.session_state["rep_sweep_curve"] = list(zip(ns.tolist(), rates))
-        st.line_chart(df, x="n", y="logical_error", use_container_width=True)
+        st.line_chart(df, x="n", y="logical_error", width="stretch")
         st.caption(
             "Observe when the curve goes down (coding helps) or up (coding hurts)."
         )
@@ -150,7 +150,7 @@ with right:
             st.session_state["rep_sweep_df"],
             x="n",
             y="logical_error",
-            use_container_width=True,
+            width="stretch",
         )
 
     # challenge tied to Activity 2 (smallest n below target)
