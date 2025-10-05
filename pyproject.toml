@@ -14,6 +14,7 @@ dependencies = [
     "pandas>=2.3.3",
     "pylatexenc>=2.10",
     "pytest>=8.4.2",
+    "qiskit>=2.2.1",
     "scipy>=1.16.2",
     "streamlit>=1.50.0",
     "xkcd>=2.4.2",
