@@ -4,7 +4,7 @@ from qec.stabilizers import PauliLengthError, pauli_commutes, syndrome_from_paul
 
 st.header("Stabilizer Playground")
 
-with st.expander("Learn the concept", expanded=True):
+with st.expander("Learn the concept", expanded=False):
     st.markdown(r"""
 For an error $E$ and generator $g$, the measured sign flips to **−1** iff $E$ and $g$ **anticommute**.
 The syndrome is the vector of these signs across generators.

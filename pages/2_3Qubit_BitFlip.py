@@ -11,7 +11,7 @@ from qec.error_models import bsc_flip_mask
 
 st.header("3-Qubit Bit-Flip Code")
 
-with st.expander("Learn the concept", expanded=True):
+with st.expander("Learn the concept", expanded=False):
     st.markdown(r"""
     ## Why do we need more than repetition?
     In the last activity, we saw that repeating a bit and taking the **majority vote** can protect information

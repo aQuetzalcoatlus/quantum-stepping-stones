@@ -12,7 +12,7 @@ from qec.error_models import bsc_flip_mask
 
 st.header("Phase-Flip via Hadamard Sandwich")
 
-with st.expander("Learn the concept", expanded=True):
+with st.expander("Learn the concept", expanded=False):
     st.markdown(r"""
 ### 🌱 What about phase errors?
 Up to now, we've only worried about **bit flips**, which are errors that swap $\ket{0}$ and $\ket{1}$.  
@@ -32,7 +32,7 @@ Now the relative phase between components has changed - and this is physically o
 
 ---
 
-### 💡 The trick: switch bases
+### The trick: switch bases
 If we want to treat phase flips just like bit flips, we can **rotate the basis** using Hadamards:
 - Apply $H$ before the noise: $Z$ errors become $X$-like.
 - Apply $H$ after the noise: rotate back.
@@ -41,7 +41,7 @@ This “H-sandwich” lets us reuse the same 3-qubit bit-flip code to also prote
 
 ---
 
-### 🔍 Encoding the phase-flip code
+### Encoding the phase-flip code
 The logical states are:
 
 $$ \ket{0_L} = \ket{+ + +}, \qquad \ket{1_L} = \ket{- - -}. $$
@@ -54,7 +54,7 @@ If a single $Z$ error occurs, the syndrome identifies which qubit flipped in pha
 
 ---
 
-### 🧩 Example
+### Example
 - If qubit 1 suffers a $Z$ error, the $X_1X_2$ stabilizer anticommutes and signals it.  
 - If qubit 2 suffers a $Z$ error, both checks flip.  
 - If qubit 3 suffers a $Z$ error, only $X_2X_3$ detects it.  
@@ -63,7 +63,7 @@ The decoder then applies $Z$ on the identified qubit to restore the logical stat
 
 ---
 
-### 🎲 Activity
+### Activity
 To really *see* what a phase flip does, let's look at a single qubit in the lab:
 
 1. Prepare the state $\ket{+}$.  
@@ -77,14 +77,14 @@ This small experiment shows why the H-sandwich works: it rotates phase errors in
 
 ---
 
-### 📊 What you can do below
+### What you can do below
 1. Use the sliders to set the error probability $p$ and number of shots.  
 2. Run the simulation in Z basis and then X basis.  
 3. Compare the bar charts and circuits to see when the phase error shows up.  
 
 ---
 
-### 🚦 Challenge
+### Challenge
 Try $p=0.3$ with 5000 shots.  
 - In the Z basis: the counts barely move from 50/50.  
 - In the X basis: you should see roughly 70% “0” and 30% “1”, revealing the phase flips directly.  
