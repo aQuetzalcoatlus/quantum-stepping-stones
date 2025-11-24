@@ -1199,6 +1199,7 @@ dependencies = [
     { name = "cvxpy" },
     { name = "hypothesis" },
     { name = "ipykernel" },
+    { name = "ipython" },
     { name = "matplotlib" },
     { name = "networkx" },
     { name = "numpy" },
@@ -1211,11 +1212,17 @@ dependencies = [
     { name = "xkcd" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "ipython" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "cvxpy", specifier = ">=1.7.3" },
     { name = "hypothesis", specifier = ">=6.140.2" },
     { name = "ipykernel", specifier = ">=6.30.1" },
+    { name = "ipython", specifier = ">=9.6.0" },
     { name = "matplotlib", specifier = ">=3.10.6" },
     { name = "networkx", specifier = ">=3.5" },
     { name = "numpy", specifier = ">=2.3.3" },
@@ -1227,6 +1234,9 @@ requires-dist = [
     { name = "streamlit", specifier = ">=1.50.0" },
     { name = "xkcd", specifier = ">=2.4.2" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ipython", specifier = ">=9.6.0" }]
 
 [[package]]
 name = "qiskit"

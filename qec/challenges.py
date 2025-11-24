@@ -36,7 +36,9 @@ def check_smallest_n_below(
     target: float, key_curve: str = "curve"
 ) -> Callable[[dict], tuple[bool, str]]:
     """
-    Expect state['curve'] to be list[tuple[n, rate]]. Pass if the *current* n equals
+    Expect state['curve'] to be list[tuple[n, rate]].
+
+    Pass if the *current* n equals
     the minimal n achieving rate ≤ target.
     """
 
