@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="resources/Repo_image_wide.png" width=300>
+</p>
+
 # Quantum Stepping Stones
 
 This repository is meant to document my learning of Quantum Error Correction through coding exercises.
