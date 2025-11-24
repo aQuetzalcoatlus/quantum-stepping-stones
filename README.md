@@ -4,10 +4,10 @@ This repository is meant to document my learning of Quantum Error Correction thr
 
 Learners who have a grasp of basic quantum information theory can use it to complement their own learning journey.
 
-<img src="resources/app_v0_screenshot.png" width=500>
-
 **Update**:</b> I am developing this into a web app made using [Streamlit](https://streamlit.io/). This is a work in progress, which aims to create a  set of interactive learning exercises to help understand Quantum Error Correction. 
 [**Click here to visit the current version of the web app.**](https://aquetzalcoatlus-quantum-stepping-stones-app-tyrl1b.streamlit.app/)
+
+<img src="resources/app_v0_screenshot.png" width=500>
 
 # References
 
